@@ -266,6 +266,18 @@ function goHome() {
   window.location.href = "index.html";
 }
 
+function isGitHubReleaseVideo(url) {
+  return /github\.com\/.+\/releases\/download\/|release-assets\.githubusercontent\.com/i.test(url || "");
+}
+
+function getVideoLoadErrorMessage() {
+  const url = BUILDINGS[currentIndex] ? BUILDINGS[currentIndex].video : "";
+  if (isGitHubReleaseVideo(url)) {
+    return "GitHub Release downloads do not expose the CORS headers needed for A-Frame video textures. Move this MP4 to CORS-enabled storage.";
+  }
+  return "Video failed to load. Check the URL and filename (case-sensitive).";
+}
+
 function probeImage(src) {
   return new Promise((resolve) => {
     const image = new Image();
@@ -343,7 +355,7 @@ async function playPauseFromClick() {
   }
 
   if (videoLoadFailed) {
-    setDebug("Video failed to load. Check the URL and filename (case-sensitive).");
+    setDebug(getVideoLoadErrorMessage());
     setToast("This stop's video could not be loaded.");
     return;
   }
@@ -521,7 +533,7 @@ videoEl.addEventListener("error", () => {
   stopVideo();
   setLoading(false);
   showVideoMode();
-  setDebug("Video failed to load. Check the URL and filename (case-sensitive).");
+  setDebug(getVideoLoadErrorMessage());
 });
 
 (function init() {
