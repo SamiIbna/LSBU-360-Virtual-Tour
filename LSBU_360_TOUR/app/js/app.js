@@ -511,7 +511,7 @@ if (scene) {
   });
 }
 
-document.addEventListener("keydown", (event) => {
+document.addE ventListener("keydown", (event) => {
   if (event.key === " " && pageMode === "video") {
     event.preventDefault();
     void playPauseFromClick();
