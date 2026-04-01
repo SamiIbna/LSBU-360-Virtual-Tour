@@ -57,7 +57,7 @@ const BUILDINGS = [
     id: "overview",
     name: "Campus Overview",
     stop: 5,
-    video: `${VIDEO_BASE}overview.mp4`,
+    video: `${VIDEO_BASE}overview.MP4`,
     photos: [],
     info: "Transition and overview clip."
   }
