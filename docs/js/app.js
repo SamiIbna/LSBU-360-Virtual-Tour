@@ -1,9 +1,13 @@
+const RELEASE_TAG = "v1.0-demo";
+const RELEASE_BASE =
+  `https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/${RELEASE_TAG}/`;
+
 const BUILDINGS = [
   {
     id: "hub",
     name: "The Hub",
     stop: 1,
-    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/hub.mp4",
+    video: `${RELEASE_BASE}hub.mp4`,
     photos: [
       "assets/photos/hub/hub_01.jpg",
       "assets/photos/hub/hub_02.jpg",
@@ -16,7 +20,7 @@ const BUILDINGS = [
     id: "keyworth",
     name: "Keyworth",
     stop: 2,
-    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/keyworth.mp4",
+    video: `${RELEASE_BASE}keyworth.mp4`,
     photos: [
       "assets/photos/keyworth/keyworth_01.jpg",
       "assets/photos/keyworth/keyworth_02.jpg",
@@ -29,7 +33,7 @@ const BUILDINGS = [
     id: "faraday",
     name: "Faraday Wing",
     stop: 3,
-    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/faraday.mp4",
+    video: `${RELEASE_BASE}faraday.mp4`,
     photos: [
       "assets/photos/faraday/faraday_01.jpg",
       "assets/photos/faraday/faraday_02.jpg",
@@ -42,7 +46,7 @@ const BUILDINGS = [
     id: "perry",
     name: "Perry Building",
     stop: 4,
-    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/perry.mp4",
+    video: `${RELEASE_BASE}perry.mp4`,
     photos: [
       "assets/photos/perry/perry_01.jpg",
       "assets/photos/perry/perry_02.jpg",
@@ -55,7 +59,7 @@ const BUILDINGS = [
     id: "overview",
     name: "Campus Overview",
     stop: 5,
-    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/overview.mp4",
+    video: `${RELEASE_BASE}overview.mp4`,
     photos: [],
     info: "Transition and overview clip."
   }
@@ -65,6 +69,7 @@ let currentIndex = 0;
 let currentPhotoIndex = 0;
 let currentPhotoPaths = [];
 let currentVideoAvailable = false;
+let videoLoadFailed = false;
 let playing = false;
 let audioOn = false;
 let currentVolume = 1;
@@ -261,30 +266,6 @@ function goHome() {
   window.location.href = "index.html";
 }
 
-function probeVideo(src) {
-  return new Promise((resolve) => {
-    const probe = document.createElement("video");
-    let settled = false;
-
-    const finish = (result) => {
-      if (settled) return;
-      settled = true;
-      probe.removeAttribute("src");
-      probe.load();
-      resolve(result);
-    };
-
-    probe.preload = "metadata";
-    probe.muted = true;
-    probe.playsInline = true;
-    probe.onloadeddata = () => finish(true);
-    probe.onerror = () => finish(false);
-    window.setTimeout(() => finish(false), 3000);
-    probe.src = src;
-    probe.load();
-  });
-}
-
 function probeImage(src) {
   return new Promise((resolve) => {
     const image = new Image();
@@ -318,6 +299,7 @@ async function loadBuilding(index) {
   currentPhotoIndex = 0;
   currentPhotoPaths = [];
   currentVideoAvailable = false;
+  videoLoadFailed = false;
 
   setLoading(true);
   setDebug("");
@@ -328,19 +310,10 @@ async function loadBuilding(index) {
 
   if (pageMode === "video") {
     showVideoMode();
-    currentVideoAvailable = await probeVideo(building.video);
-    if (token !== loadToken) return;
-
-    if (currentVideoAvailable) {
-      videoEl.src = building.video;
-      videoEl.load();
-      showVideoMode();
-    } else {
-      resetVideoSource();
-      showVideoMode();
-      setDebug(`Missing video file: ${building.video}`);
-      setToast("Add the MP4 file to assets/videos.");
-    }
+    console.log("Loading video URL:", building.video);
+    videoEl.src = building.video;
+    videoEl.load();
+    showVideoMode();
   } else {
     currentPhotoPaths = await loadAvailablePhotos(building);
     if (token !== loadToken) return;
@@ -369,9 +342,14 @@ async function playPauseFromClick() {
     return;
   }
 
-  if (!currentVideoAvailable) {
-    setDebug(`Missing video file: ${BUILDINGS[currentIndex].video}`);
-    setToast("This stop does not have a playable MP4 yet.");
+  if (videoLoadFailed) {
+    setDebug("Video failed to load. Check the URL and filename (case-sensitive).");
+    setToast("This stop's video could not be loaded.");
+    return;
+  }
+
+  if (!videoEl.src && !videoEl.currentSrc) {
+    setDebug("No video URL is configured for this stop.");
     return;
   }
 
@@ -381,6 +359,7 @@ async function playPauseFromClick() {
   }
 
   setDebug("");
+  setLoading(true);
   showVideoMode();
   videoSphere.setAttribute("visible", "false");
 
@@ -388,17 +367,21 @@ async function playPauseFromClick() {
     const playPromise = videoEl.play();
     if (playPromise) await playPromise;
   } catch (_) {
+    setLoading(false);
     setDebug("Playback blocked. Click Play again.");
     return;
   }
 
   if (!videoEl.videoWidth || !videoEl.videoHeight) {
+    setLoading(false);
     stopVideo();
     setDebug("Video decoded as 0x0. Re-export as H.264 / yuv420p MP4.");
     return;
   }
 
+  setLoading(false);
   playing = true;
+  currentVideoAvailable = true;
   updatePlayUi();
   videoSphere.setAttribute("visible", "true");
   await refreshVideoTexture();
@@ -527,11 +510,18 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") goHome();
 });
 
+videoEl.addEventListener("loadedmetadata", () => {
+  currentVideoAvailable = true;
+  videoLoadFailed = false;
+});
+
 videoEl.addEventListener("error", () => {
+  videoLoadFailed = true;
   currentVideoAvailable = false;
   stopVideo();
+  setLoading(false);
   showVideoMode();
-  setDebug(`Missing video file: ${BUILDINGS[currentIndex].video}`);
+  setDebug("Video failed to load. Check the URL and filename (case-sensitive).");
 });
 
 (function init() {
