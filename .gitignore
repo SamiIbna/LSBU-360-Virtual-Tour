@@ -1,4 +1,8 @@
 SS for project/
 video sites/
 *.zip
+*.mp4
+*.MP4
+assets/videos/*.mp4
+assets/videos/*.MP4
 LSBU_360_TOUR/app/assets/photos/keyworth/100_0001.MP4
