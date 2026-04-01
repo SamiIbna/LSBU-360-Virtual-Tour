@@ -3,7 +3,7 @@ const BUILDINGS = [
     id: "hub",
     name: "The Hub",
     stop: 1,
-    video: "assets/videos/hub.mp4",
+    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/hub.mp4",
     photos: [
       "assets/photos/hub/hub_01.jpg",
       "assets/photos/hub/hub_02.jpg",
@@ -16,7 +16,7 @@ const BUILDINGS = [
     id: "keyworth",
     name: "Keyworth",
     stop: 2,
-    video: "assets/videos/keyworth.mp4",
+    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/keyworth.mp4",
     photos: [
       "assets/photos/keyworth/keyworth_01.jpg",
       "assets/photos/keyworth/keyworth_02.jpg",
@@ -29,7 +29,7 @@ const BUILDINGS = [
     id: "faraday",
     name: "Faraday Wing",
     stop: 3,
-    video: "assets/videos/faraday.mp4",
+    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/faraday.mp4",
     photos: [
       "assets/photos/faraday/faraday_01.jpg",
       "assets/photos/faraday/faraday_02.jpg",
@@ -42,7 +42,7 @@ const BUILDINGS = [
     id: "perry",
     name: "Perry Building",
     stop: 4,
-    video: "assets/videos/perry.mp4",
+    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/perry.mp4",
     photos: [
       "assets/photos/perry/perry_01.jpg",
       "assets/photos/perry/perry_02.jpg",
@@ -55,7 +55,7 @@ const BUILDINGS = [
     id: "overview",
     name: "Campus Overview",
     stop: 5,
-    video: "assets/videos/overview.mp4",
+    video: "https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/v1.0-demo/overview.mp4",
     photos: [],
     info: "Transition and overview clip."
   }
