@@ -47,16 +47,15 @@
       <a-text value="LSBU 360 Photo Tour" color="#111827" width="1.8" align="center" position="0 0.36 0.01"></a-text>
 
       <a-entity position="0 0.16 0.01">
-        <a-entity position="-0.72 0 0"><a-plane class="vr-clickable" data-action="building" data-id="hub" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Hub" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
-        <a-entity position="-0.36 0 0"><a-plane class="vr-clickable" data-action="building" data-id="keyworth" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Keyworth" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
-        <a-entity position="0 0 0"><a-plane class="vr-clickable" data-action="building" data-id="faraday" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Faraday" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
-        <a-entity position="0.36 0 0"><a-plane class="vr-clickable" data-action="building" data-id="perry" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Perry" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
-        <a-entity position="0.72 0 0"><a-plane class="vr-clickable" data-action="building" data-id="overview" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Overview" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
+        <a-entity position="-0.54 0 0"><a-plane class="vr-clickable" data-action="building" data-id="hub" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Hub" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
+        <a-entity position="-0.18 0 0"><a-plane class="vr-clickable" data-action="building" data-id="keyworth" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Keyworth" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
+        <a-entity position="0.18 0 0"><a-plane class="vr-clickable" data-action="building" data-id="faraday" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Faraday" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
+        <a-entity position="0.54 0 0"><a-plane class="vr-clickable" data-action="building" data-id="perry" width="0.28" height="0.12" color="#e5efff"></a-plane><a-text value="Perry" color="#111827" width="0.8" align="center" position="0 0 0.015"></a-text></a-entity>
       </a-entity>
 
       <a-entity position="0 -0.04 0.01">
-        <a-entity position="-0.72 0 0"><a-plane class="vr-clickable" data-action="prev" width="0.42" height="0.12" color="#f3f4f6"></a-plane><a-text value="Prev" color="#374151" width="0.9" align="center" position="0 0 0.015"></a-text></a-entity>
-        <a-entity position="-0.24 0 0"><a-plane class="vr-clickable" data-action="next" width="0.42" height="0.12" color="#f3f4f6"></a-plane><a-text value="Next" color="#374151" width="0.9" align="center" position="0 0 0.015"></a-text></a-entity>
+        <a-entity position="-0.72 0 0"><a-plane class="vr-clickable" data-action="prev" width="0.42" height="0.12" color="#f3f4f6"></a-plane><a-text value="Stop -" color="#374151" width="0.9" align="center" position="0 0 0.015"></a-text></a-entity>
+        <a-entity position="-0.24 0 0"><a-plane class="vr-clickable" data-action="next" width="0.42" height="0.12" color="#f3f4f6"></a-plane><a-text value="Stop +" color="#374151" width="0.9" align="center" position="0 0 0.015"></a-text></a-entity>
         <a-entity position="0.24 0 0"><a-plane class="vr-clickable" data-action="video-page" width="0.42" height="0.12" color="#2563eb"></a-plane><a-text value="Video" color="#ffffff" width="0.9" align="center" position="0 0 0.015"></a-text></a-entity>
         <a-entity position="0.72 0 0"><a-plane class="vr-clickable" data-action="home" width="0.42" height="0.12" color="#fee2e2"></a-plane><a-text value="Home" color="#991b1b" width="0.9" align="center" position="0 0 0.015"></a-text></a-entity>
       </a-entity>
@@ -66,7 +65,7 @@
         <a-entity position="0.32 0 0"><a-plane class="vr-clickable" data-action="photo-next" width="0.55" height="0.12" color="#f3f4f6"></a-plane><a-text value="Photo +" color="#374151" width="1.0" align="center" position="0 0 0.015"></a-text></a-entity>
       </a-entity>
 
-      <a-text id="vrStopText" value="Stop 1/5 - The Hub" color="#2563eb" width="1.8" align="center" position="0 -0.37 0.01"></a-text>
+      <a-text id="vrStopText" value="Stop 1/4 - The Hub" color="#2563eb" width="1.8" align="center" position="0 -0.37 0.01"></a-text>
     </a-entity>
   </a-scene>
 
@@ -74,7 +73,7 @@
     <div class="topbar">
       <div class="topbar-left">
         <div class="logo-mark"><span class="live-dot"></span>LSBU 360</div>
-        <div class="pill stop-pill" id="stopPill">Stop 1 / 5</div>
+        <div class="pill stop-pill" id="stopPill">Stop 1 / 4</div>
         <div class="pill mode-pill photo" id="modePill">PHOTO</div>
       </div>
       <div class="topbar-right">
@@ -95,8 +94,8 @@
         </div>
 
         <div class="nav-cluster">
-          <button class="ctrl-btn" id="prevBtn" title="Previous stop">Prev</button>
-          <button class="ctrl-btn" id="nextBtn" title="Next stop">Next</button>
+          <button class="ctrl-btn" id="prevBtn" title="Previous stop">Prev Stop</button>
+          <button class="ctrl-btn" id="nextBtn" title="Next stop">Next Stop</button>
         </div>
 
         <button class="ctrl-btn" id="photoPrevBtn" title="Previous photo">Prev Photo</button>
@@ -111,6 +110,6 @@
     </div>
   </div>
 
-  <script src="js/app.js?v=r2-20260401-2"></script>
+  <script src="js/app.js?v=photo-20260401"></script>
 </body>
 </html>

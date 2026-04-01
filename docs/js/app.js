@@ -75,6 +75,9 @@ let toastTimer = null;
 let loadToken = 0;
 
 const pageMode = document.body.dataset.pageMode;
+const PAGE_BUILDINGS = pageMode === "photo"
+  ? BUILDINGS.filter((building) => building.photos.length > 0)
+  : BUILDINGS;
 const scene = document.getElementById("scene");
 const htmlHud = document.getElementById("htmlHud");
 const videoEl = document.getElementById("video360");
@@ -136,7 +139,7 @@ function setLoading(isLoading) {
 }
 
 function getIdxById(id) {
-  const index = BUILDINGS.findIndex((building) => building.id === id);
+  const index = PAGE_BUILDINGS.findIndex((building) => building.id === id);
   return index >= 0 ? index : 0;
 }
 
@@ -148,9 +151,9 @@ function updatePlayUi() {
 function updateHeader(building) {
   if (infoName) infoName.textContent = building.name;
   if (infoDesc) infoDesc.textContent = building.info;
-  if (stopPill) stopPill.textContent = `Stop ${building.stop} / ${BUILDINGS.length}`;
+  if (stopPill) stopPill.textContent = `Stop ${building.stop} / ${PAGE_BUILDINGS.length}`;
   if (vrStopText) {
-    vrStopText.setAttribute("value", `Stop ${building.stop}/${BUILDINGS.length} - ${building.name}`);
+    vrStopText.setAttribute("value", `Stop ${building.stop}/${PAGE_BUILDINGS.length} - ${building.name}`);
   }
   if (photoPageBtn) photoPageBtn.href = `photo.html?stop=${building.id}`;
   if (videoPageBtn) videoPageBtn.href = `video.html?stop=${building.id}`;
@@ -201,7 +204,7 @@ function showPhotoMode() {
 function buildTabs() {
   if (!buildingTabs) return;
   buildingTabs.innerHTML = "";
-  BUILDINGS.forEach((building, index) => {
+  PAGE_BUILDINGS.forEach((building, index) => {
     const button = document.createElement("button");
     button.className = "btab";
     button.textContent = building.name;
@@ -251,12 +254,12 @@ function applyAudioState() {
 }
 
 function openPhotoPage() {
-  const building = BUILDINGS[currentIndex];
+  const building = PAGE_BUILDINGS[currentIndex];
   window.location.href = `photo.html?stop=${building.id}`;
 }
 
 function openVideoPage() {
-  const building = BUILDINGS[currentIndex];
+  const building = PAGE_BUILDINGS[currentIndex];
   window.location.href = `video.html?stop=${building.id}`;
 }
 
@@ -295,7 +298,8 @@ async function loadAvailablePhotos(building) {
 
 async function loadBuilding(index) {
   const token = ++loadToken;
-  const building = BUILDINGS[index];
+  const building = PAGE_BUILDINGS[index];
+  if (!building) return;
 
   currentIndex = index;
   currentPhotoIndex = 0;
@@ -396,11 +400,11 @@ function seek(seconds) {
 }
 
 function nextBuilding() {
-  void loadBuilding((currentIndex + 1) % BUILDINGS.length);
+  void loadBuilding((currentIndex + 1) % PAGE_BUILDINGS.length);
 }
 
 function prevBuilding() {
-  void loadBuilding((currentIndex - 1 + BUILDINGS.length) % BUILDINGS.length);
+  void loadBuilding((currentIndex - 1 + PAGE_BUILDINGS.length) % PAGE_BUILDINGS.length);
 }
 
 function photoNext() {
