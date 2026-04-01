@@ -1,13 +1,11 @@
-const RELEASE_TAG = "v1.0-demo";
-const RELEASE_BASE =
-  `https://github.com/SamiIbna/LSBU-360-Virtual-Tour/releases/download/${RELEASE_TAG}/`;
+const VIDEO_BASE = "https://pub-e967b4623a9541f293212e8d07df4dfa.r2.dev/";
 
 const BUILDINGS = [
   {
     id: "hub",
     name: "The Hub",
     stop: 1,
-    video: `${RELEASE_BASE}hub.mp4`,
+    video: `${VIDEO_BASE}hub.mp4`,
     photos: [
       "assets/photos/hub/hub_01.jpg",
       "assets/photos/hub/hub_02.jpg",
@@ -20,7 +18,7 @@ const BUILDINGS = [
     id: "keyworth",
     name: "Keyworth",
     stop: 2,
-    video: `${RELEASE_BASE}keyworth.mp4`,
+    video: `${VIDEO_BASE}keyworth.mp4`,
     photos: [
       "assets/photos/keyworth/keyworth_01.jpg",
       "assets/photos/keyworth/keyworth_02.jpg",
@@ -33,7 +31,7 @@ const BUILDINGS = [
     id: "faraday",
     name: "Faraday Wing",
     stop: 3,
-    video: `${RELEASE_BASE}faraday.mp4`,
+    video: `${VIDEO_BASE}faraday.mp4`,
     photos: [
       "assets/photos/faraday/faraday_01.jpg",
       "assets/photos/faraday/faraday_02.jpg",
@@ -46,7 +44,7 @@ const BUILDINGS = [
     id: "perry",
     name: "Perry Building",
     stop: 4,
-    video: `${RELEASE_BASE}perry.mp4`,
+    video: `${VIDEO_BASE}perry.mp4`,
     photos: [
       "assets/photos/perry/perry_01.jpg",
       "assets/photos/perry/perry_02.jpg",
@@ -59,7 +57,7 @@ const BUILDINGS = [
     id: "overview",
     name: "Campus Overview",
     stop: 5,
-    video: `${RELEASE_BASE}overview.mp4`,
+    video: `${VIDEO_BASE}overview.mp4`,
     photos: [],
     info: "Transition and overview clip."
   }
@@ -266,15 +264,7 @@ function goHome() {
   window.location.href = "index.html";
 }
 
-function isGitHubReleaseVideo(url) {
-  return /github\.com\/.+\/releases\/download\/|release-assets\.githubusercontent\.com/i.test(url || "");
-}
-
 function getVideoLoadErrorMessage() {
-  const url = BUILDINGS[currentIndex] ? BUILDINGS[currentIndex].video : "";
-  if (isGitHubReleaseVideo(url)) {
-    return "GitHub Release downloads do not expose the CORS headers needed for A-Frame video textures. Move this MP4 to CORS-enabled storage.";
-  }
   return "Video failed to load. Check the URL and filename (case-sensitive).";
 }
 
