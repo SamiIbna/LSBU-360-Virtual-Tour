@@ -546,3 +546,4 @@ videoEl.addEventListener("error", () => {
   const startStop = qs("stop") || "hub";
   void loadBuilding(getIdxById(startStop));
 })();
+
